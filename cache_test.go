@@ -1,7 +1,6 @@
 package gocrud_redis
 
 import (
-	"context"
 	"fmt"
 	"github.com/redis/go-redis/v9"
 	"testing"
@@ -17,16 +16,28 @@ func TestGetCache(t *testing.T) {
 	fmt.Printf("----------%v", cache)
 }
 
-func TestName(t *testing.T) {
-	client := redis.NewUniversalClient(&redis.UniversalOptions{
-		Addrs:    []string{"192.168.30.16:30202"},
+func client() redis.UniversalClient {
+	return redis.NewUniversalClient(&redis.UniversalOptions{
+		Addrs:    []string{"192.168.0.190:6379"},
 		Password: "940430Dex",
 		DB:       2,
 	})
-	ctx := context.Background()
-	client.ZAdd(ctx, "AAAAAAAA", redis.Z{})
-	//demo := Demo{"tom", 82}
-	//table := NewHashTable(client, "table", "id", "name")
-	//table.Save(&demo)
+}
+
+func TestName(t *testing.T) {
+	client := client()
+	demo := Demo{"tom", 82}
+	table := NewHashTable(client, "table", "id", "name")
+	table.Save(&demo)
 	//table.Save(map[string]interface{}{"id": "cc", "name": "ppp", "vv": 99999999, "age": "ooooooooooo"})
+}
+
+func TestIndex(t *testing.T) {
+	rdb := client()
+	newvalue := "2024-03-02 11:10:04"
+
+	key := "MMM"
+	index := NewIndex(rdb, key, 2)
+	index.AddList(newvalue)
+
 }

@@ -2,7 +2,7 @@ module github.com/kordar/gocrud-redis
 
 go 1.18
 
-replace github.com/kordar/gocrud => ../gocrud
+replace github.com/kordar/gocrud => ../../github.com/gocrud
 
 require (
 	github.com/kordar/goutil v1.1.1
