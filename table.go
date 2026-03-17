@@ -12,4 +12,6 @@ type Table interface {
 	Limit(offset int, limit int) Table
 	Sort(key string, value string) Table
 	Save(v interface{}) Table
+	Updates(data map[string]interface{}) Table
+	Delete() Table
 }

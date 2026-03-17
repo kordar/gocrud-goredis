@@ -19,7 +19,7 @@ func (w *WhereWrapper) AddWhere(where Where) {
 
 func (w *WhereWrapper) Exec(value map[string]interface{}) bool {
 	if len(w.items) == 0 {
-		return false
+		return true
 	}
 	for _, item := range w.items {
 		if !item.Exec(value) {
@@ -30,6 +30,9 @@ func (w *WhereWrapper) Exec(value map[string]interface{}) bool {
 }
 
 func Conditions(wrappers []WhereWrapper, items map[string]interface{}) bool {
+	if len(wrappers) == 0 {
+		return true
+	}
 	for _, wrapper := range wrappers {
 		if wrapper.Exec(items) {
 			return true
